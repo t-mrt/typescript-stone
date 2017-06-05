@@ -1,0 +1,23 @@
+{
+  "name": "typescript-stone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/t-mrt/typescript-stone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/t-mrt/typescript-stone/issues"
+  },
+  "homepage": "https://github.com/t-mrt/typescript-stone#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^2.4.0-dev.20170605"
+  }
+}
