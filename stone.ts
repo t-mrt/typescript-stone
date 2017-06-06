@@ -19,9 +19,34 @@ class StoneError extends Error {
 
 }
 
-const re = /\s*((\/\/.*)|([0-9]+)|("(\\"|\\\\|\\n|[^"])*")|[A-Z_a-z][A-Z_a-z0-9]*|==|<=|>=|&&|\|\|<|>|\+|-|=|{|})?/;
+const re = /^\s*((\/\/.*)|([0-9]+)|("(\\"|\\\\|\\n|[^"])*")|[A-Z_a-z][A-Z_a-z0-9]*|==|<=|>=|&&|\|\|<|>|\+|-|=|{|})?/;
+let sa = [
+    "{",
+    "12",
+    "// aaa",
+    ">",
+    `"hoge"`,
+    "  =",
+]
+for ( let s of sa) {
+    let r = re.exec(s)
+    console.log(s);
 
-console.log(re.exec("while i < 10 {"));
+    if (r) {
+        if (r[0] !== r[1]){
+            console.log("スペース")
+        }else if(!!r[2]) {
+            console.log("コメント");
+        } else if (!!r[3]) {
+            console.log("数値リテラル");
+        } else if (!!r[4]) {
+            console.log("文字リテラル");
+        } else {
+            console.log("識別子");
+        }
+    }
+    console.log("-------------");
+}
 
 class Lexer {
     hasMore: boolean;
@@ -64,7 +89,7 @@ class Lexer {
     readLine(): void {
         let line: string;
         try {
-            line = this.reader.readLine(); // 例外を生成します
+            line = this.reader.readLine();
         }
         catch (e) {
             throw new StoneError;
@@ -78,6 +103,20 @@ class Lexer {
         let pos = 0;
         let endPos = line.length;
         while (pos < endPos) {
+            let truncatedLine = line.substr(pos, endPos);
+            let result = re.exec(truncatedLine)
+            if (result !== null){
+                this.addToken(lineNo, result);
+                pos = pos + result[0].length;
+            }
+        }
+        // this.queue.push(new IdToken(lineNo, ""))
+    }
+
+    addToken(lineNo: number, result: RegExpExecArray) {
+        let m = result[1];
+        if (m.length == 0) {
+            if (result[2] == ""){}
         }
     }
 
